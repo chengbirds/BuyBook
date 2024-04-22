@@ -27,12 +27,12 @@
  </view>
   <view class="footer">
    <view class="select">
-     <icon style='margin: 0 26rpx;' wx:if="{{ selectAll }}" type="success" color="#ef4136" bindtap="selectListAll"/>
+     <icon style='margin: 0 26rpx;' wx:if="{{ selectAll }}" type="success" color="#08dae7" bindtap="selectListAll"/>
      <icon style='margin: 0 26rpx;'wx:else type="circle" bindtap="selectListAll"/>
      <text style='font-size: 32rpx'>全选</text>
    </view>
    <view class="totalprice">
-    合计：<text style='color: #ef4136;'>¥{{ totalPrice }}</text>
+    合计：<text style='color: #08dae7;'>¥{{ totalPrice }}</text>
    </view>
     <view class="xiadan" bindtap='bindViewTOrder'>下单</view>
   </view>

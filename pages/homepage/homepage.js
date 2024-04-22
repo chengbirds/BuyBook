@@ -33,20 +33,16 @@ Page({
    */
   onShow: function () {
     wx.request({
-      url: 'http://47.93.185.25:8000/api/jingyantieList',
-        method: 'POST',
+      url: 'http://192.168.73.150:10001/clientHomeProduct',
+        method: 'GET',
         success: (res) => {
-          console.log(res.data.jingyantieList);
+  console.log(res.data.result)
           this.setData({
-            article: res.data.jingyantieList,
+            article:res.data.result
           });
-        },
-        fail: (res) => {
-          wx.showModal({
-            title: '加载失败，点击重试',
-            content: '',
-          })
-        },
+          console.log(this.data.article)
+
+        }
     })
   },
 

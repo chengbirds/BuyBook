@@ -15,7 +15,7 @@ Page({
      console.log(value.bookname);
      if(value.bookname) {
        wx.request({
-         url: 'http://47.93.185.25:8000/api/book/search',
+         url: '',
          data: {
            bookname: value.bookname
          },
@@ -89,7 +89,7 @@ Page({
       complete: false
     });  
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/type',
+      url: '',
       data: {
         booktype: '考研'
       },
@@ -112,7 +112,7 @@ Page({
       complete: false
     });
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/type',
+      url: '',
       data: {
         booktype: '经管'
       },
@@ -137,7 +137,7 @@ Page({
       complete: false
     });
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/type',
+      url: '',
       data: {
         booktype: '材料'
       },
@@ -156,7 +156,7 @@ Page({
   },
   clickViewJixie: function () {
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/type',
+      url: '',
       data: {
         booktype: '机械'
       },
@@ -180,7 +180,7 @@ Page({
       complete: false
     });
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/type',
+      url:'' ,
       data: {
         booktype: '计算机'
       },

@@ -2,11 +2,11 @@
 <view class="container">  
   <view class="hander">  
   <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text>{{userInfo.nickName}}</text>
-    </block>
+    <!-- <open-data type=“userAvatarUrl”></open-data>
+    <open-data type=“userNickName”></open-data> -->
+  <image class="avatar" src="{{avatarUrl}}"></image>
+<text class="nicheng" style="position: absolute;margin-top: 280rpx;margin-left: 20rpx;margin-left: 65rpx;">{{userInfo.nickName}}</text>
+<text bind:tap="log" style="font-size: 35rpx;margin-top: 120rpx;margin-left: 20rpx;">登录/退出</text>
   </view>
   <view class="about">关于我们</view>
   </view>
@@ -24,5 +24,14 @@
   <view class="order-box">
   <navigator url="../myorder/myorder">我的订单</navigator>
   </view>
+  <van-popup show="{{ show }}" bind:close="onClose"  position="bottom" round>
+<view style="width:750rpx;height: 410rpx;text-align: center;">
+ 
+  <button wx:if="{{!userInfo}}" bindtap="login" style="height: 150rpx;line-height: 150rpx;">微信授权登录</button>
+<view wx:else class="root">
+  <button bindtap="loginOut" style="width: 750rpx;height: 150rpx;line-height: 150rpx;">退出登录</button>
+</view>
+<button style="margin-top: -1rpx;"  bindtap="avatar"style="height: 150rpx;line-height: 150rpx;">手机号码登录</button>
+</view></van-popup>
 </view>
 

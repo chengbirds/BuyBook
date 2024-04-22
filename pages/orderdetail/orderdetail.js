@@ -19,7 +19,7 @@ Page({
       })
     }else{
     wx.request({
-      url: 'http://47.93.185.25:8000/api/order/add',
+      url: '',
       data: {
         address: app.globalData.address,
         order: app.globalData.order,

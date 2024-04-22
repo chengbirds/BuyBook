@@ -1,5 +1,10 @@
 {
+  "usingComponents": {
+    "van-popup": "@vant/weapp/dist/popup/index",
+    "van-button": "@vant/weapp/dist/button/index",
+    "van-icon": "@vant/weapp/dist/icon/index"
+  },
   "navigationBarBackgroundColor": "#666666",
   "navigationBarTitleText": "信息管理",
-  "navigationBarTextStyle": "#000000"
+  "navigationBarTextStyle": "white"
 }

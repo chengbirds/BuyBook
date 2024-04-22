@@ -76,7 +76,7 @@ Page({
     const value = e.detail.value;
     console.log(value);
     wx.request({
-      url: 'http://47.93.185.25:8000/api/book/seel',
+      url: '',
       data: {
         bookname: value
       },

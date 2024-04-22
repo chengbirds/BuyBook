@@ -66,47 +66,47 @@ button::after {
 }
 .kaoyan:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .renwen:hover {
-  border-left: 3px solid #ef4136;
-  color: #ef4136;
+  border-left: 3px solid #08dae7;
+  color: #08dae7;
 }
 .jingguan:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .tumu:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .cailiao:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .jixie:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .zidonghua:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .jisuanji:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .shuilishuidian:hover {
    transition: width 2s;
-   border-left: 3px solid #ef4136;
-   color: #ef4136;
+   border-left: 3px solid #08dae7;
+   color: #08dae7;
 }
 .right {
   margin-top: 90rpx;

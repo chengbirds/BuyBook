@@ -1,0 +1,24 @@
+{
+  "name": "buybook",
+  "version": "1.0.0",
+  "description": "一个后端基于node和mysql的微信小程序，用于校园二手教材交易",
+  "main": "app.js",
+  "dependencies": {
+    "@vant/weapp": "^1.11.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EzrealPrince/BuyBook.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EzrealPrince/BuyBook/issues"
+  },
+  "homepage": "https://github.com/EzrealPrince/BuyBook#readme",
+  "keywords": []
+}
