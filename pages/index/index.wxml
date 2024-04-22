@@ -27,11 +27,11 @@
   <van-popup show="{{ show }}" bind:close="onClose"  position="bottom" round>
 <view style="width:750rpx;height: 410rpx;text-align: center;">
  
-  <button wx:if="{{!userInfo}}" bindtap="login" style="height: 150rpx;line-height: 150rpx;">微信授权登录</button>
+<button wx:if="{{!userInfo}}" style="margin-top: -1rpx;"  bindtap="avatar"style="height: 150rpx;line-height: 150rpx;">手机号码登录</button>
 <view wx:else class="root">
   <button bindtap="loginOut" style="width: 750rpx;height: 150rpx;line-height: 150rpx;">退出登录</button>
 </view>
-<button style="margin-top: -1rpx;"  bindtap="avatar"style="height: 150rpx;line-height: 150rpx;">手机号码登录</button>
+
 </view></van-popup>
 </view>
 

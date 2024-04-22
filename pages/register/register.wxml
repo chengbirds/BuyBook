@@ -1,0 +1,22 @@
+<!--pages/register/register.wxml-->
+<view style="margin-top: 45%;">
+    <van-cell-group>
+        <view style="width: 70%;margin-left: 15%;">
+            <van-field model:value="{{ username }}" placeholder="请输入用户名" />
+            <van-field model:value="{{ password }}" placeholder="请输入密码" />
+            <van-field model:value="{{ confirmPassword }}" placeholder="请确认密码" />
+						<view style="margin: 20rpx 0rpx 20rpx 20rpx;">
+           <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+           校区  ：{{array[index]}}
+    </view>
+  </picker>
+</view>
+            <van-button type="info" round size="large" color="#08dae7" style="margin: 20rpx 0rpx" bind:tap="register">注册</van-button>
+            <view style="margin-top: 20rpx;">
+                <text class="link" bindtap="navigateToLogin">返回登录</text>
+            </view>
+        </view>
+    </van-cell-group>
+    <van-toast id="van-toast" />
+</view>

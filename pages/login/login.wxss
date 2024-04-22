@@ -1,0 +1,10 @@
+/* pages/login/login.wxss */
+.link{
+margin-left: 205rpx;
+color: red;
+
+}
+.link1{
+	margin-left: 40rpx;
+	color:black
+	}

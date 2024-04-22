@@ -1,5 +1,11 @@
 {
   "navigationBarBackgroundColor": "#f8f8f8",
   "navigationBarTitleText": "卖书详情",
-  "navigationBarTextStyle": "black"
+	"navigationBarTextStyle": "black",
+	"usingComponents": {
+		"van-uploader": "@vant/weapp/uploader/index",
+		"van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+		"van-dropdown-item": "@vant/weapp/dropdown-item/index"
+	}
+	
 }

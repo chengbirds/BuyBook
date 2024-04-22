@@ -1,0 +1,13 @@
+<view style="margin-top: 45%;">
+	<van-cell-group>
+		<view style="width: 70%;margin-left: 15%;">
+			<van-field model:value="{{ username }}" placeholder="请输入用户名" />
+		<van-field model:value="{{ password }}" placeholder="请输入密码" />
+			<van-button type="info" round  size="large" color="#08dae7" style="margin-bottom: 270rpx;" bind:tap="login">登录</van-button>
+			<view style="margin-top: 20rpx;">
+			<text class="link1" bindtap="navigateToRegister" >注册用户</text>
+			<text class="link" bindtap="navigateToForgotPassword">忘记密码</text></view></view>
+	</van-cell-group>
+	<van-toast id="van-toast" />
+
+</view>

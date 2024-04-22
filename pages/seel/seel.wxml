@@ -1,3 +1,30 @@
+<view style="margin-top: 20rpx;width: 80%;margin: 0 auto;border: 1rpx solid #08dae7;border-radius: 10rpx;">
+		<van-cell-group>
+  <van-field
+    value="{{ value }}"
+    placeholder="请输入书名"
+  />
+	<van-field
+    value="{{ value }}"
+    placeholder="请输入作者"
+  />
+	<view class="section">
+  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+    <view class="picker">
+      使用情况  ：{{array[index]}}
+    </view>
+  </picker>
+</view>
+
+</van-cell-group>
+
+
+	<van-button round block color='#08dae7'>我要卖书</van-button>
+</view>
+<view>
+</view>
+
+<!-- 
 <view class="main" wx:if="{{ !search }}">
   <view class="header" bindtap='search'>
     <view class="abc">
@@ -22,9 +49,9 @@
     </view>
     <view class="confirm" bindtap='confirmseel'>下一步</view>
   </view>
-</view>
+</view> -->
 
-<view class="search-main" wx:if="{{ search }}">
+<!-- <view class="search-main" wx:if="{{ search }}">
   <view class="search-top">
     <view class="search-input">
       <view>
@@ -65,4 +92,4 @@
       </view>
     </view>
   </view>
-</view>
+</view> -->

@@ -13,9 +13,8 @@
   <view class='thumbnail'>
       <image src='/images/53.jpg'></image>
   </view>
-
     <van-card wx:for="{{article}}"  
-    wx:for-item="item" wx:for-index="index" 
+  wx:for-item="item" wx:for-index="index" 
   tag="{{item.title}}"
   price="{{item.price}}"
   desc="{{item.desc}}"
