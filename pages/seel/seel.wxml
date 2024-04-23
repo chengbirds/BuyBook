@@ -1,28 +1,39 @@
-<view style="margin-top: 20rpx;width: 80%;margin: 0 auto;border: 1rpx solid #08dae7;border-radius: 10rpx;">
-		<van-cell-group>
-  <van-field
-    value="{{ value }}"
-    placeholder="请输入书名"
+<view style="width: 80%;margin: 150rpx auto;">
+	<van-cell-group>
+		<van-field   label="书名" model:value="{{ name }}" placeholder="请输入书名" />
+		<van-field  label="作者" model:value="{{ author}}" placeholder="请输入作者" />
+		<van-field
+    model:value="{{ detail }}"
+    label="详情"
+    type="textarea"
+    placeholder="请输入详情"
+    autosize
+
   />
-	<van-field
-    value="{{ value }}"
-    placeholder="请输入作者"
-  />
-	<view class="section">
-  <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-    <view class="picker">
-      使用情况  ：{{array[index]}}
-    </view>
-  </picker>
-</view>
+		<view style="margin: 20rpx 0rpx 20rpx 25rpx;">
+			<picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+				<view class="picker">
+					使用情况 ：{{array[index]}}
+				</view>
+			</picker>
+		</view>
+		<view style="margin: 20rpx 0rpx 20rpx 25rpx;">
 
-</van-cell-group>
-
-
-	<van-button round block color='#08dae7'>我要卖书</van-button>
+			<picker bindchange="bindPickerChange1" value="{{index1}}" range="{{array1}}" >
+				<view class="picker">
+					选择类别：{{array1[index1]}}
+				</view>
+			</picker>
+		</view>
+	</van-cell-group>
+价格	<van-stepper value="{{ 1 }}" bind:change="onChange" />
+	<van-uploader file-list="{{ fileList }}" bind:after-read="afterRead" />
+	<van-button round block color='#08dae7' bind:tap="sell">发布图书</van-button>
 </view>
 <view>
+	
 </view>
+<van-toast id="van-toast" />
 
 <!-- 
 <view class="main" wx:if="{{ !search }}">

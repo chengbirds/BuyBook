@@ -1,21 +1,29 @@
 <view class="titel"></view>
-<view class="titel-detail">
-  {{ article.titel }}
-</view>
 <view class="line"></view>
 <view class="user">
   <view class="userinfo">
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-    <text>{{userInfo.nickName}}</text>
+    <image class="userinfo-avatar" src="{{userInfo.avatar}}" background-size="cover"></image>
+		用户名 <text>{{userInfo.username}}</text>
   </view>
-  <view class="guanzhu">
-    + 关注 
+  <view style="font-size: smaller;line-height:130rpx;">
+	{{userInfo.create_time}}	
   </view>
 </view>
-<view class="content">
-  {{ article.content }}
+<view style="text-align: center;margin-top: 30rpx;">
+<image style="height: 300rpx;width:300rpx;" src="{{article.image}}" background-size="cover"></image>
 </view>
-<view class="bottom">
+<view style="margin-left: 40rpx;">书名:<text class="titel-detail">{{ article.name }}</text></view>
+<view style="margin-left: 40rpx;">作者:<text class="titel-detail">{{ article.author }}</text></view>
+<view style="margin-left: 40rpx;">详情:<text class="titel-detail">{{ article.detail }}</text></view>
+<view style="margin-left: 40rpx;">使用情况:<text class="titel-detail">{{ article.status }}</text></view>
+<view style="margin-left: 40rpx;">类别:<text class="titel-detail">{{ article.type.title }}</text></view>
+<view style="margin-left: 40rpx;">价格:<text class="titel-detail">{{ article.price }}元</text></view>
+
+
+
+
+
+<!-- <view class="bottom">
   <view class="zan">
     <view class="zan-detail">
       <view style='margin-right: 10rpx;'>赞同 {{ article.zan }}</view>
@@ -31,4 +39,22 @@
       <view style='margin-right: 10rpx;' style='margin-top: 5rpx;'>评论 {{ article.pinglun }}</view>
     </view>
   </view>
+</view> -->
+<van-goods-action>
+  <van-goods-action-icon icon="chat-o" text="客服" />
+  <van-goods-action-icon icon="cart-o" text="购物车" info="5" />
+  <van-goods-action-button color="#00daa7" text="加入购物车" type="warning" />
+  <van-goods-action-button color="#08dae7" text="立即购买" bind:tap="isShow" />
+
+</van-goods-action>
+
+<van-popup
+  show="{{show}}"
+  position="bottom"
+  custom-style="height: 40%;"
+  bind:close="onClose"
+	round
+>
+<view style="margin-left: 40rpx;margin-top: 50rpx;"><text style="font-size: x-large;">{{ article.name }}</text>
 </view>
+</van-popup>

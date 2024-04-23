@@ -64,7 +64,7 @@
 //               })
 //             }
 //           })
-          
+
 //         }
 //       }
 //     })
@@ -97,94 +97,212 @@
 //    * 生命周期函数--监听页面加载
 //    */
 //   onLoad: function (options) {
-  
+
 //   },
 
 //   /**
 //    * 生命周期函数--监听页面初次渲染完成
 //    */
 //   onReady: function () {
-  
+
 //   },
 
 //   /**
 //    * 生命周期函数--监听页面显示
 //    */
 //   onShow: function () {
-  
+
 //   },
 
 //   /**
 //    * 生命周期函数--监听页面隐藏
 //    */
 //   onHide: function () {
-  
+
 //   },
 
 //   /**
 //    * 生命周期函数--监听页面卸载
 //    */
 //   onUnload: function () {
-  
+
 //   },
 
 //   /**
 //    * 页面相关事件处理函数--监听用户下拉动作
 //    */
 //   onPullDownRefresh: function () {
-  
+
 //   },
 
 //   /**
 //    * 页面上拉触底事件的处理函数s
 //    */
 //   onReachBottom: function () {
-  
+
 //   },
 
 //   /**
 //    * 用户点击右上角分享
 //    */
 //   onShareAppMessage: function () {
-  
+
 //   }
 // })
+import Toast from '@vant/weapp/toast/toast';
 Page({
-  data: {
-    fileList: [
+	data: {
+		fileList: [],
+		array: ['全新未使用', '几乎全新', '良好使用状态', '一般使用状态', '破损或损坏'],
+		value1: 0,
+		objectArray: [{
+				id: 0,
+				name: '全新未使用'
+			},
+			{
+				id: 1,
+				name: '几乎全新'
+			},
+			{
+				id: 2,
+				name: '良好使用状态'
+			},
+			{
+				id: 3,
+				name: '一般使用状态'
+			},
+			{
+				id: 4,
+				name: '破损或损坏'
+			}
 		],
-		array: ['全新未使用', '几乎全新', '良好使用状态', '一般使用状态','破损或损坏'],
+		index: 0,
+		array1: [],
+		objectArray1: [],
+		index1: 0,
+		name: "",
+		author: "",
+		detail: "",
+		status: "",
+		price: 1,
+		type_id: 1,
+	},
+	onLoad() {
+		const that = this
+		var objectArray1 = [];
+		var array1 = []
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/type/',
+			header: {
+				token: wx.getStorageSync('token')
+			},
+			success: (res) => {
+				console.log(res, 888)
+				if (res.data.code == 0) {
+					// 请求成功
+					objectArray1 = res.data.data;
+					res.data.data.forEach(item => {
+						array1.push(item.title)
+					})
 
-		value1:0,
-	objectArray: [
-		{
-			id: 0,
-			name: '全新未使用'
-		},
-		{
-			id: 1,
-			name: '几乎全新'
-		},
-		{
-			id: 2,
-			name: '良好使用状态'
-		},
-		{
-			id: 3,
-			name: '一般使用状态'
-		},
-		{
-			id:4,
-			name:'破损或损坏'
+				}
+				that.setData({
+					objectArray1: objectArray1,
+					array1: array1
+				})
+			},
+			fail: (error) => {
+				console.log(error)
+			}
+		})
+	},
+	bindPickerChange: function (e) {
+		console.log('picker发送选择改变，携带值为', e.detail.value)
+		this.setData({
+			index: e.detail.value
+		})
+	},
+	bindPickerChange1: function (e) {
+		console.log('picker发送选择改变，携带值为', e.detail.value)
+		this.setData({
+			index1: e.detail.value
+		})
+	},
+	onChange(event) {
+		this.setData({
+			price: event.detail
+		})
+		console.log(event.detail);
+	},
+	afterRead: function (event) {
+		const that = this;
+		console.log(event, 77);
+		const {
+			file
+		} = event.detail;
+		// 当设置 mutiple 为 true 时, file 为数组格式，否则为对象格式
+		wx.uploadFile({
+			url: 'http://127.0.0.1:8000/upload/book_img/', // 仅为示例，非真实的接口地址
+			filePath: file.url,
+			name: 'file',
+			formData: {
+				user: 'test'
+			},
+			success(res) {
+				// 上传完成需要更新 fileList
+				const {
+					fileList = []
+				} = that.data;
+				fileList.push({
+					...file,
+					url: res.data
+				});
+				that.setData({
+					fileList
+				});
+			},
+		});
+	},
+	sell: function () {
+		const that = this;
+		var data
+		if (that.data.fileList[0]?.url !== undefined) {
+		
+			data = {
+				name: that.data.name,
+				author: that.data.author,
+				detail: that.data.detail,
+				status: that.data.array[that.data.index],
+				price: that.data.price,
+				type_id: that.data.index1+1,
+				image: that.data.fileList[0]?.url
+			}
+		} else {
+			data = {
+				name: that.data.name,
+				author: that.data.author,
+				detail: that.data.detail,
+				status: that.data.array[that.data.index],
+				price: that.data.price,
+				type_id: that.data.index1+1,
+			}
 		}
-	],
-	index: 0
-},
-bindPickerChange: function(e) {
-	console.log('picker发送选择改变，携带值为', e.detail.value)
-	this.setData({
-		index: e.detail.value
-	})
-},
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/book/?offset=0',
+			method: 'POST',
+			data: data,
+			header: {
+				"token": wx.getStorageSync('token')
+			},
+			success: (res) => {
+				if(res.data.code==0){
+					// 发布成功
+					Toast('发布成功~')
+				}else{
+					Toast('发布失败~')
+				}
+				console.log(res, 996, wx.getStorageSync('token'));
+			}
+		})
+	}
 });
-

@@ -14,18 +14,29 @@
       <image src='/images/53.jpg'></image>
   </view>
     <van-card wx:for="{{article}}"  
+		wx:key="id"
   wx:for-item="item" wx:for-index="index" 
-  tag="{{item.title}}"
+	data-idd="{{item.id}}"
+  tag="{{item.name}}"
   price="{{item.price}}"
-  desc="{{item.desc}}"
+  desc="{{item.detail}}"
   title="{{item.name}}"
-  thumb="{{item.img}}"
->
-<view slot="footer">
-    <van-button size="mini" style="margin-right: 30rpx;" >收藏</van-button>
-    <van-button size="mini" type="danger">加购</van-button>
-  </view>
-</van-card>
+  thumb="{{item.image}}"
+	bind:tap="articleDetail"
+/>
+<!-- <van-card
+  wx:for="{{article}}"  
+  wx:key="id"
+  wx:for-item="item" 
+  wx:for-index="index" 
+  num="2"
+  price="{{item.price}}"
+  desc="描述信息"
+  title="商品标题"
+  thumb="http://127.0.0.1:8000/media/book_img/default.png"
+/> -->
+
+
 
 <view class="bottom">
 没有啦，翻到底了。。。

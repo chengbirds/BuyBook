@@ -7,8 +7,9 @@ Page({
     motto: 'Hello World',
     hasUserInfo: false,
     hasAddress: false,
-    address: {},
-    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+		address: {},
+		canIUse: wx.canIUse('button.open-type.getUserInfo'),
+		fileList:[],
     avatarUrl: 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
     show: false,
     userInfo:'',
@@ -25,6 +26,9 @@ Page({
     this.setData({ show: false });
   },
 avatar:function() {
+	this.setData({
+		show:false
+	})
   wx.navigateTo({
     url: '/pages/login/login'
   })
@@ -36,190 +40,104 @@ log(){
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-   
-    let user=wx.getStorageSync('user')
-    console.log("进入小程序的index页面获取缓存",user)
-    this.setData({
-        userInfo:user
-    })
-    console.log(this.data.userInfo);
-    if (this.data.userInfo !== null) {
-      console.log(this.data.userInfo);
-      this.setData({
-        avatarUrl: this.data.userInfo.avatarUrl
-      })
-    }
+	
 
   },
-  login(){
-    wx.getUserProfile({
-        desc:'必须授权后才能继续使用',
-        success:async (res)=>{
-          await this.loginWithCode()
-          this.sendCode()
-          this.onClose()
-            let user=res.userInfo
-            console.log(user,888);
-            //设置本地缓存,把用户信息缓存到本地
-            wx.setStorageSync('user',user)
-            console.log('用户信息',user)
-       this.setData({
-            userInfo: user
-          })
-            console.log(this.data.userInfo);
-            if (this.data.userInfo !== '') {
-              this.setData({
-                avatarUrl: this.data.userInfo.avatarUrl
-              })
-            }
-        
-        }
-    })
 
-},
-//退出登录
-loginOut(){
-    this.setData({
-        userInfo:''
-    })
-    wx.setStorageSync('user',null)
-    if (this.data.userInfo == '') {
-      this.setData({
-        avatarUrl: '/pages/image/avatar.png'
-      })
-    }
-    this.sendBack()
-    this.onClose()
-},
- loginWithCode(){
- return new Promise((resolve,reject)=>{
-    wx.login({
-       success: (res)=>{
-        console.log('code',res.code);
-      
-        this.setData({
-          code:res.code
+  chooseImage: function () {
+    var that = this
+    // 选择图片
+    wx.chooseMedia({
+      count: 1, // 只能选择一张图片
+      sizeType: ['original', 'compressed'],
+      sourceType: ['album', 'camera'],
+      success: function (res) {
+				// 选择成功，上传图片
+				console.log(res,55)
+        var tempFilePaths = res.tempFiles
+        wx.uploadFile({
+          url: 'http://127.0.0.1:8000/upload/avatar/',
+          filePath: tempFilePaths[0].tempFilePath,
+          name: 'file',
+          formData: {
+            'user': 'test'
+					},
+					header:{
+						token:wx.getStorageSync('token')
+					},
+          success: function (res) {
+            var data = res.data
+            // 上传成功后，更新头像显示
+            that.setData({
+              avatarUrl: tempFilePaths[0].tempFilePath
+						})
+						// 保存头像后更新用户信息（注册接口）
+						let result = wx.request({
+							url: 'http://127.0.0.1:8000/api/edited/user/',
+							method: 'PUT',
+							data: {
+								nickname:wx.getStorageSync('user').nickname,
+								username:wx.getStorageSync('user').username,
+								campus:wx.getStorageSync('user').campus.id,
+								avatar:that.data.avatarUrl,
+							},
+							header:{
+								token:wx.getStorageSync('token')
+							},
+							success: (res) => {
+				
+								if (res.data.code == 0) {
+									// 登录成功，可以在这里处理后端返回的数据
+									wx.setStorageSync('user', res.data.data);
+								} else if (res.data.code == -1) {
+											console.log('修改失败')
+								}
+				
+							},
+				
+						});
+          }
         })
-        resolve();
-      },
-      fail:(error)=>{
-        reject(error);
       }
     })
-  })
+	},
 
-},
-sendCode:function () {
-  console.log(this.data.code);
-  wx.request({
-    url: 'http://192.168.73.150:10001/wxlogin',
-    data:{
-      code:this.data.code,
-    },
-    method:"POST",
-    success:  (res)=> {
-      this.setData({
-        openid:res.data.openid,
-        session_key:res.data.session_key
-      })
-      console.log(res.data);
-      wx.setStorageSync('openid',this.data.openid)
-      wx.setStorageSync('session_key',this.data.session_key)
-    },
-    fail: function (error) {
-      console.log(error);
-    }
-  })
-},
-sendBack:function () {
-  wx.request({
-    url: 'http://192.168.73.150:10001/wxlogout/',
-    data:{
-      method:2,
-      openid:this.data.openid,
-      session_key:this.data.session_key
-    },
-    method:"PUT",
-    success:function (res) {
-      console.log(res.data);
-      this.onClose()
-    },
-    fail:function (error) {
-      console.log(error);
-    }
-  })
-},
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
-  bindViewTapAddress: function () {
+	bindViewTapAddress: function () {
     wx.navigateTo({
       url: '../address/address'
     })
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  },
-  async getUserProfile(e) {
-    wx.getUserProfile({
-      desc: '用于获取用户个人信息',
-      success: function (detail) {
-        
-        wx.login({
-          success: res => {
-            var code = res.code; //登录凭证
-            wx.cloud.callFunction({
-              name: "getCurrentUserInfo",
-              data: {
-                encryptedData: detail.encryptedData,
-                iv: detail.iv,
-                code: code,
-                userInfo: detail.rawData
-              }
-            }).then(res => {
-              console.log("res: ",res);
-              var openid = res.result.openid;
-              var status = res.result.status;
-              var phone = res.result.phone;
-              console.log("openid: ",openid);
-              console.log("status: ",status);
-              console.log("phone: ",phone);
-              console.log("nickName: ",detail.userInfo.nickName);
-              
-              if(phone==undefined){
-                console.log("需要绑定手机号");
-              }else{
-                console.log("授权成功");
-              }
-            }).catch(res => {
-              console.log("res3: ",res);
-            })
-          }
-        });
-      },
-      fail: function () {
-       wx.showModal({
-         content: '取消授权将会影响相关服务，您确定取消授权吗？',
-         success (res) {
-           if (res.confirm) {
-             wx.showToast({
-               title: '已取消授权',
-               duration: 1500
-             })
-           } else if (res.cancel) {
-             this.getUserProfile()
-           }
-         }
-       })
-      }
-    })
-  }
+	loginOut:function(){
+		this.setData({
+			show:false,
+			avatarUrl:'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0',
+		})
+		wx.removeStorageSync('token');
+		wx.removeStorageSync('user');
+		
+		this.onShow()
+	},
+	onShow(){
+		const that = this;
+		var user = wx.getStorageSync('user');
+		console.log("从存储中获取到的用户信息:", user);
+		
+		that.setData({
+				userInfo: user
+		});
+		
+		console.log("数据中 userInfo 的值:", that.data.userInfo);
+		
+		if (that.data.userInfo !== null) {
+				console.log("用户信息不为 null。正在更新 avatarUrl。");
+				that.setData({
+						avatarUrl: that.data.userInfo.avatar
+				});
+				console.log("已更新的 avatarUrl:", that.data.avatarUrl);
+		} else {
+				console.log("用户信息为 null。跳过更新 avatarUrl。");
+		}
+	}
+	
+
 })

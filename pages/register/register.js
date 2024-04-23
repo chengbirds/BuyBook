@@ -1,4 +1,5 @@
 // pages/register/register.js
+import Toast from '@vant/weapp/toast/toast';
 Page({
 
 	/**
@@ -10,7 +11,7 @@ Page({
 		confirmPassword: '',
 		array: [],
 		index: 0,
-		value1:0,
+		value1: 0,
 		objectArray: []
 	},
 
@@ -18,29 +19,64 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad(options) {
+		var objectArray = [];
+		var array = [];
 		wx.request({
 			url: 'http://127.0.0.1:8000/api/campus/',
 			success: (res) => {
 				console.log(res, 888)
 				if (res.data.code == 0) {
 					// 请求成功
-					this.data.objectArray=res.data.data;
-						res.data.data.forEach(item=>{
-					this.data.array.push(item.name)
+					objectArray = res.data.data;
+					res.data.data.forEach(item => {
+						array.push(item.name)
 					})
-console.log(this.data.array,this.data.objectArray,8889)
+
 				}
+				this.setData({
+					objectArray: objectArray,
+					array: array
+				})
 			}
 		})
 
 	},
-	bindPickerChange: function(e) {
+	bindPickerChange: function (e) {
 		console.log('picker发送选择改变，携带值为', e.detail.value)
 		this.setData({
 			index: e.detail.value
 		})
 	},
-	
+	navigateToLogin() {
+		wx.navigateBack()
+	},
+	register() {
+		if (this.data.password !== this.data.confirmPassword) {
+			Toast('两次输入的密码不一致');
+		} else {
+			console.log(this.data.objectArray,this.data.index,777)
+		
+			wx.request({
+				url: 'http://127.0.0.1:8000/api/register/',
+				method: 'POST',
+				data: {
+					username: this.data.username,
+					password: this.data.password,
+					campus: this.data.index+1
+				},
+				success: (res) => {
+					if(res.data.code==-1){
+						Toast(`${res.data.detail.error}`);
+					}else if(res.data.code==0){
+						Toast('注册成功，返回登录');
+						wx.navigateBack()
+					}
+					
+				}
+			})
+		}
+	},
+
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
