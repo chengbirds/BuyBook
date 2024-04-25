@@ -1,208 +1,197 @@
 // pages/address/address.js
+import Toast from '@vant/weapp/toast/toast';
 let app = getApp();
 var area = require('../../area/area');
-var p = 0, c = 0, d = 0;
+var p = 0,
+	c = 0,
+	d = 0;
 Page({
-  data: {
-    provinceName: [
-      '北京市',
-      '陕西省',
-      '四川省'
-      ],
-    provinceCode: [],
-    provinceSelIndex: '',
-    cityName: [],
-    cityCode: [],
-    citySelIndex: '',
-    districtName: [],
-    districtCode: [],
-    districtSelIndex: '',
-    cityEnabled: false,
-    districtEnabled: false,
-    showMessage: false,
-    messageContent: '',
-    address: {
-      name: '',
-      phone: '',
-      province: '',
-      city: '',
-      district: '',
-      detail: ''
-    }
-  },
+	data: {
+		provinceName: [
+			'北京市',
+			'陕西省',
+			'四川省'
+		],
+		provinceCode: [],
+		provinceSelIndex: '',
+		cityName: [],
+		cityCode: [],
+		citySelIndex: '',
+		districtName: [],
+		districtCode: [],
+		districtSelIndex: '',
+		cityEnabled: false,
+		districtEnabled: false,
+		showMessage: false,
+		messageContent: '',
+		address: {
+			name: '',
+			phone: '',
+			campus_id: '',
+			detail: ''
+		},
+		addresslist: {
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
+		},
+		array: [],
+		index: 0,
+		value1: 0,
+		objectArray: [],
+		switch1Checked: false
+	},
 
-  },
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad: function (options) {
+		var objectArray = [];
+		var array = [];
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/campus/',
+			success: (res) => {
+				console.log(res, 888)
+				if (res.data.code == 0) {
+					// 请求成功
+					objectArray = res.data.data;
+					res.data.data.forEach(item => {
+						array.push(item.name)
+					})
 
-  bindViewTapindex: function () {
-    wx.navigateTo({
-      url: '../index/index'
-    })
-  },
-  changeProvince: function (e) {
-    this.resetAreaData('province')
-    p = e.detail.value
-    this.setAreaData('province', p)
-  },
-  // 选择市
-  changeCity: function (e) {
-    this.resetAreaData()
-    c = e.detail.value
-    this.setAreaData('city', p, c)
-  },
-  // 选择区
-  changeDistrict: function (e) {
-    d = e.detail.value
-    this.setAreaData('district', p, c, d)
-  },
+				}
+				this.setData({
+					objectArray: objectArray,
+					array: array
+				})
+			}
+		})
+	},
+	bindPickerChange: function (e) {
+		console.log('picker发送选择改变，携带值为', e.detail.value)
+		this.setData({
+			index: e.detail.value
+		})
+	},
 
-  setAreaData: function (t, p, c, d) {
-    switch (t) {
-      case 'province':
-        this.setData({
-          provinceSelIndex: p,
-          cityEnabled: true
-        })
-        break;
-      case 'city':
-        this.setData({
-          citySelIndex: c,
-          districtEnabled: true
-        })
-        break;
-      case 'district':
-        this.setData({
-          districtSelIndex: d
-        })
-    }
+	bindViewTapindex: function () {
+		wx.navigateTo({
+			url: '../index/index'
+		})
+	},
 
-    var p = p || 0 // provinceSelIndex
-    var c = c || 0 // citySelIndex
-    var d = d || 0 // districtSelIndex
-    // 设置省的数据
-    var province = area['100000']
-    var provinceName = [];
-    var provinceCode = [];
-    for (var item in province) {
-      provinceName.push(province[item])
-      provinceCode.push(item)
-    }
-    this.setData({
-      provinceName: provinceName,
-      provinceCode: provinceCode
-    })
-    // 设置市的数据
-    var city = area[provinceCode[p]]
-    var cityName = [];
-    var cityCode = [];
-    for (var item in city) {
-      cityName.push(city[item])
-      cityCode.push(item)
-    }
-    this.setData({
-      cityName: cityName,
-      cityCode: cityCode
-    })
-    // 设置区的数据
-    var district = area[cityCode[c]]
-    var districtName = [];
-    var districtCode = [];
-    for (var item in district) {
-      districtName.push(district[item])
-      districtCode.push(item)
-    }
-    this.setData({
-      districtName: districtName,
-      districtCode: districtCode
-    })
-  },
-  // 重置数据
-  resetAreaData: function (type) {
-    this.setData({
-      districtName: [],
-      districtCode: [],
-      districtSelIndex: '',
-      districtEnabled: false
-    })
-    if (type == 'province') {
-      this.setData({
-        cityName: [],
-        cityCode: [],
-        citySelIndex: ''
-      })
-    }
-  },
+	formSubmit(e) {
+		const that = this;
+		const value = e.detail.value;
+		console.log(value, e, 6693);
+		if (value.name && value.phone && value.detail) {
+			wx.request({
+				url: 'http://127.0.0.1:8000/api/address/',
+				data: {
+					campus_id: that.data.index + 1,
+					receiver_name: value.name,
+					phone_number: value.phone,
+					is_default: true,
+					detail: value.detail
+				},
+				method: "POST",
+				header: {
+					"token": wx.getStorageSync('token')
+				},
+				success: (res) => {
+					if (res.data.code == 0) {
+						Toast('保存成功')
+						that.onShow()
+					}
+					console.log(res, 552);
+				}
+			})
+		} else {
+			wx.showModal({
+				title: '提示',
+				content: '请填写完整资料',
+				showCancel: false
+			})
+		}
+	},
+	switchChange(e) {
+		
+		if(e.detail.value==true){
+	// 设默认地址
+	wx.request({
+		url: `http://127.0.0.1:8000/api/address/default/${e.currentTarget.dataset.item}/`,
+		method: "PUT",
+		header: {
+			"token": wx.getStorageSync('token')
+		},
+		success: (res) => {
+			console.log(res, 889);
+			this.onShow()
+		}
+	})
+		}
+		console.log(e, 555);
+	
+	},
 
-  formSubmit(e) {
-    const value = e.detail.value;
-    if (value.name && value.phone && value.province && value.city && value.district && value.detail)
-    {
-      wx.setStorage({
-        key: 'address',
-        data: value,
-        success(){
-          wx.navigateBack();
-        }
-      })
-    }else{
-      wx.showModal({
-        title: '提示',
-        content: '请填写完整资料',
-        showCancel: false
-    })
-    }
-  },
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function () {
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
+	},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
-  },
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+		const that = this;
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/address/',
+			header: {
+				"token": wx.getStorageSync('token')
+			},
+			success: (res) => {
+				console.log(res.data.data.results, 32);
+				that.setData({
+					addresslist: res.data.data.results
+				})
+			}
+		})
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
+		
+	},
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
+	/**
+	 * 生命周期函数--监听页面隐藏
+	 */
+	onHide: function () {
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
+	},
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
+	/**
+	 * 生命周期函数--监听页面卸载
+	 */
+	onUnload: function () {
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
+	},
+
+	/**
+	 * 页面相关事件处理函数--监听用户下拉动作
+	 */
+	onPullDownRefresh: function () {
+
+	},
+
+	/**
+	 * 页面上拉触底事件的处理函数
+	 */
+	onReachBottom: function () {
+
+	},
+
+	/**
+	 * 用户点击右上角分享
+	 */
+	onShareAppMessage: function () {
+
+	}
 })

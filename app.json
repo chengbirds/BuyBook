@@ -67,7 +67,14 @@
 		"van-goods-action": "@vant/weapp/goods-action/index",
 		"van-goods-action-icon": "@vant/weapp/goods-action-icon/index",
 		"van-goods-action-button": "@vant/weapp/goods-action-button/index",
-		"van-popup": "@vant/weapp/popup/index"
+		"van-popup": "@vant/weapp/popup/index",
+		"van-cell": "@vant/weapp/cell/index",
+		"van-cell-group": "@vant/weapp/cell-group/index",
+		"van-switch": "@vant/weapp/switch/index",
+		"van-sticky": "@vant/weapp/sticky/index",
+		"van-sidebar": "@vant/weapp/sidebar/index",
+		"van-sidebar-item": "@vant/weapp/sidebar-item/index"
+		
 
 		
   }

@@ -8,7 +8,8 @@ Page({
     bookname: '',
     bookList: [],
     msg: '',
-    complete: false
+		complete: false,
+		category:{}
   },
   formSubmit: function(e) {
     const value = e.detail.value;
@@ -66,7 +67,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+		const that=this
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/type/',
+			method:'GET',
+			success:(res)=>{
+				console.log(res,55);
+			that.setData({
+			category:res.data.data
+			})
+			}
+		})
   },
 
   /**
@@ -107,99 +118,9 @@ Page({
     })
 
 },  
-  clickViewJingguan: function() {
-    this.setData({
-      complete: false
-    });
-    wx.request({
-      url: '',
-      data: {
-        booktype: '经管'
-      },
-      method: 'POST',
-      success: (res) => {
-        console.log(res.data.bookList);
-        this.setData({
-          bookList: res.data.bookList,
-          complete: true
-        });  
-      },
-      fail: (res) => {
-        console.log('error')
-      } 
-    })
-  },
-  clickViewTumu: function () {
-    
-  },
-  clickViewCailiao: function () {
-    this.setData({
-      complete: false
-    });
-    wx.request({
-      url: '',
-      data: {
-        booktype: '材料'
-      },
-      method: 'POST',
-      success: (res) => {
-        console.log(res.data.bookList);
-        this.setData({
-          bookList: res.data.bookList,
-          complete: true
-        });
-      },
-      fail: (res) => {
-        console.log('error')
-      }
-    })
-  },
-  clickViewJixie: function () {
-    wx.request({
-      url: '',
-      data: {
-        booktype: '机械'
-      },
-      method: 'POST',
-      success: (res) => {
-        console.log(res.data.bookList);
-        this.setData({
-          bookList: res.data.bookList,
-        });
-      },
-      fail: (res) => {
-        console.log('error')
-      }
-    })
-  },
-  clickViewZidonghua: function () {
+clickView(){
 
-  },
-  clickViewJisuanji: function () {
-    this.setData({
-      complete: false
-    });
-    wx.request({
-      url:'' ,
-      data: {
-        booktype: '计算机'
-      },
-      method: 'POST',
-      success: (res) => {
-        console.log(res.data.bookList);
-        this.setData({
-          bookList: res.data.bookList,
-          complete: true
-        });
-      },
-      fail: (res) => {
-        console.log('error')
-      }
-    })
-  },
-  clickViewShuilishuidian: function () {
-
-  },
+},
   /**
    * 生命周期函数--监听页面显示
    */

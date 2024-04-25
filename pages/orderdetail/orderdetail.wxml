@@ -1,28 +1,31 @@
 <view class="main">
   <view class="address">
-    <view wx:if="{{hasAddress}}" class="address-list">
+    <view wx:if="{{address!==null}}" class="address-list">
       <view class="name-number">
-        <view class="name">{{address.name}}</view>
-        <view class="number">{{address.phone}}</view>
+        <view class="name">{{address.campus.name}}</view>
+        <view class="number">{{address.phone_number}}</view>
       </view>
       <view class="address-x">
         <view class="default">默认</view>
-        <view class="address-detail">{{address.province + address.city + address.district + address.detail}}</view>
+        <view class="address-detail">{{address.detail}}      {{address.receiver_name}}</view>
       </view>
     </view>
   </view>
+	<view>
   <view class="cart-list" wx:for="{{ order }}" wx:key="id">
-    <image class="carts-item-image" src=" {{ item.imgurl }}"></image>
+    <image class="carts-item-image" src="http://127.0.0.1:8000{{ item.book.image }}"></image>
       <view class="carts-item-box">
         <view class="carts-item-title">
-          <view class="item-title">{{ item.book_titel }}</view>
+          <view class="item-title">{{ item.book.name }}</view>
           <view class="carts-item-number">
-            <view class="item-price">¥{{ item.price }}</view>
-            <view class="item-num">✖️{{ item.num }}</view>
+            <view class="item-price">¥{{ item.book.price }}</view>
+            <view class="item-num">✖️{{ item.quantity}}</view>
           </view>
         </view>
       </view>
   </view>
+	<view style="height: 100rpx;"></view>
+	</view>
   <view class="footer">
     <view class="pricedetail">
       <view class="price-content">实付款：¥{{ totalprice }}</view>

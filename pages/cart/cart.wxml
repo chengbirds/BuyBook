@@ -1,21 +1,27 @@
+
+<view style="position:sticky;top: 0rpx;background-color: rgb(104, 218, 218);">
+<van-cell-group>
+  <van-cell title="" value="{{address.receiver_name}}-{{address.phone_number}}" label="地址  {{address.campus.name}} {{address.detail}}"/>
+</van-cell-group></view>
 <view class='carts-box'>
+
  <view wx:if="{{ hasList }}">
   <view class="carts-item" wx:for="{{ carts }}" wx:key="id">
-    <icon class="carts-item-icon" wx:if="{{ item.selected }}" type="success" color="red" bindtap="selectList" data-index="{{ index }}" />
-    <icon class="carts-item-icon" wx:else type="circle" bindtap='selectList' data-index="{{ index }}" />
-    <image class="carts-item-image" src=" {{ item.imgurl }}"></image>
+    <icon class="carts-item-icon" wx:if="{{ item.selected }}" type="success" color="red" bindtap="selectList" data-index="{{ index }}" data-id="{{item.id}}" />
+    <icon class="carts-item-icon" wx:else type="circle" bindtap='selectList' data-index="{{ index }}" data-id="{{item.id}}"/>
+    <image class="carts-item-image" src=" http://127.0.0.1:8000{{ item.book.image }}"></image>
     <view class="carts-item-box">
       <view class="carts-item-title">
-        <view>{{ item.book_titel }}</view>
-        <view>{{ item.price }}</view>
+        <view>{{ item.book.name }}</view>
+        <view>{{ item.book.price }}</view>
       </view>
       <view class="change-box">
         <view class="numberchange">
-          <text bindtap='subnumber' data-index="{{ index }}">-</text>
-          <text>{{ item.num }}</text>
-          <text bindtap='addnumber' data-index="{{ index }}">+</text>
+					<van-stepper value="{{ item.quantity }}" bind:change="onChange" data-id="{{item.id}}" data-book_id="{{item.book.id}}"/>
         </view>
-        <text class="carts-item-delete" bindtap="deleteitem">X</text>
+        <view class="carts-item-delete" bindtap="deleteitem" data-id="{{item.id}}">	<van-button type="danger" size="mini" ><text style="font-size: 20rpx;">删除</text></van-button>
+				</view>
+			
       </view>
     </view>
   </view>
@@ -25,6 +31,7 @@
    <view>你是不是不喜欢学习!!!</view>
    <view>竟然一本想买的书都没有!!！</view>
  </view>
+ <view style="background-color: azure;">
   <view class="footer">
    <view class="select">
      <icon style='margin: 0 26rpx;' wx:if="{{ selectAll }}" type="success" color="#08dae7" bindtap="selectListAll"/>
@@ -32,8 +39,10 @@
      <text style='font-size: 32rpx'>全选</text>
    </view>
    <view class="totalprice">
-    合计：<text style='color: #08dae7;'>¥{{ totalPrice }}</text>
+    合计：<text style='color: #08dae7;'>¥{{ totalPrice }}</text>
    </view>
     <view class="xiadan" bindtap='bindViewTOrder'>下单</view>
-  </view>
+  </view></view>
 </view>
+
+<van-toast id="van-toast" />

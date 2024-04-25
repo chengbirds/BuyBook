@@ -15,34 +15,12 @@
   </view>  
   <view class="content">
   <view class="left">
-    <view class="kaoyan" bindtap='clickViewKaoyan' id="kaoyan1"> 
-      <text>考研</text>
-    </view>
-    <view class='jingguan' bindtap='clickViewJingguan'>
-      <text>经管</text>
-    </view >
-    <view class='tumu' bindtap='clickViewTumu'>
-      <text>土木</text>
-    </view>
-    <view class='cailiao' bindtap='clickViewCailiao'>
-      <text>材料</text>
-    </view>
-    <view class='jixie' bindtap='clickViewJixie'>
-      <text>机械</text>
-    </view>
-    <view class='renwen' bindtap='clickViewRenwen'>
-      <text>人文</text>
-    </view>
-    <view class='shuilishuidian' bindtap='clickViewShuilishuidian'>
-      <text>水利</text>
-    </view>
-    <view class='zidonghua' bindtap='clickViewZidong'>
-      <text>自动化</text>
-    </view>
-    <view class='jisuanji' bindtap='clickView' bindtap='clickViewJisuanji'>
-      <text>计算机</text>
+    <view class="kaoyan" bindtap='clickView' data-id="item.id"  wx:for="{{ category }}" wx:key="index"> 
+      <text>{{item.title}}</text>
     </view>
   </view>
+
+
   <view class='right'>
     <view wx:if="{{complete}}">
       <view bindtap='bookdetail' data-index="{{ index }}"class="s-items" wx:for = "{{ bookList }}" wx:key="id"  >

@@ -8,77 +8,31 @@ Page({
   data: {
     order: [],
     totalprice: 0,
-    address: {}
+		address: {},
+		
   },
   confirm: function() {
-    if(this.data.address == null)
-    {
-      wx.showModal({
-        title: '您还没有收货地址，是否新建一个？',
-        content: '',
-      })
-    }else{
-    wx.request({
-      url: '',
-      data: {
-        address: app.globalData.address,
-        order: app.globalData.order,
-        totalprice: app.globalData.totalprice,
-      },
-      method: 'POST',
-      success: (res, req) => {
-        console.log(res.data);
-        wx.showModal({
-          title: '确认下单?',
-          content: '',
-          success: function (res) {
-            if (res.confirm) {
-              console.log('用户点击确定')
-              wx.navigateBack({
-              });
-              for(let i = 0;i < app.globalData.order.length;i++)
-              {
-                for(let j = 0;j < app.globalData.carts.length;j++)
-                {
-                  if (app.globalData.order[i].id == app.globalData.carts[j].id)
-                  {
-                    console.log('删除购物车');
-                    app.globalData.confirmorder = true;
-                    app.globalData.carts.splice(j,1);
-                  }
-                } //判断下单后删除原来购物车相关内容
-              }
-              let totalprice1 = {totalprice: 0};
-              if (app.globalData.totalprice != 0){
-                totalprice1.totalprice = app.globalData.totalprice;
-                app.globalData.order.push(totalprice1)
-                app.globalData.orderindex.push(app.globalData.order);
-              }
-              app.globalData.totalprice = 0;
-            } else if (res.cancel) {
-              console.log('用户点击取消')
-            }
-          }
-        }); 
-      }, 
-      fail: (res, req) => {
-        wx.showModal({
-          title: '下单成功',
-          content: '',
-          showCancel: false
-        });
-        wx.navigateTo({
-          url: '../cart/cart',
-        })
-      }
-    })
-    }
+  wx.request({
+		url: 'http://127.0.0.1:8000/api/order/',
+	})
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+	console.log(options,999);
+	this.setData({
+		order:JSON.parse(options.carts),
+		address:JSON.parse(options.address)
+	})
+	var totalprice=0
+this.data.order.forEach((item)=>{
+	totalprice=item.book.price*item.quantity+totalprice
+})
+this.setData({
+	totalprice:totalprice
+})
+
   },
 
   /**
@@ -96,34 +50,9 @@ Page({
     /**
      * 获取本地缓存 地址信息
      */
-    wx.getStorage({
-      key: 'address',
-      success: function (res) {
-        self.setData({
-          hasAddress: true,
-          address: res.data
-        })
-      }
-    })
-     this.setData ({
-       totalprice: app.globalData.totalprice,
-       order: app.globalData.order
-     });
-     console.log(app.globalData.order);
-     /* wx.request({
-       url: 'http://47.93.185.25:8000/api/order/add',
-       method: 'POST',
-       data: {
-         order: this.order,
-         totalprice: this.totalprice
-       },
-       success: (res) => {
-          console.log(res.data)
-          this.setData({
-            person: res.data
-          })
-       },
-     }) */
+   
+
+   
      
   },
 

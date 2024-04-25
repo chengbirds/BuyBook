@@ -1,4 +1,5 @@
 // pages/articleDetail/articleDetail.js
+import Toast from '@vant/weapp/toast/toast';
 let app = getApp()
 Page({
 	/**
@@ -7,7 +8,8 @@ Page({
 	data: {
 		article: {},
 		userInfo: {},
-		show:false
+		show:false,
+		value:1
 	},
 
 	/**
@@ -48,6 +50,29 @@ this.setData({
 			show:false
 		})
 	},
+	addCart(){
+		const that=this;
+wx.request({
+	url: 'http://127.0.0.1:8000/api/cart/',
+	method:"POST",
+	data:{
+		book_id:that.data.article.id,
+    quantity:1//加入购物车默认为1
+	},
+	header:{
+		"token":wx.getStorageSync('token')
+	},
+	success:(res)=>{
+		Toast('成功加入购物车！')
+console.log(res,6668885)
+
+	}
+})
+	},
+	onChange(event) {
+		console.log(event.detail);
+		this.data.value=event.detail
+  },
 	/**
 	 * 生命周期函数--监听页面初次渲染完成
 	 */
