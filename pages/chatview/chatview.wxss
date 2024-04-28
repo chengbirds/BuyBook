@@ -1,0 +1,99 @@
+/* pages/wxchat/wxchat.wxss */
+page{
+  height: 100%;
+}
+.content{
+  height: 100%;
+  display: flex;
+}
+.content-info .content-list{
+  margin-bottom: 88rpx;
+}
+/* 信息 */
+.content .content-info .content-list .content-li{
+  clear: both;
+  overflow: hidden;
+}
+.left-info{
+  clear: both;
+  margin: 20rpx 20rpx;
+}
+.left-info .myhead{
+  float: left;
+  width: 88rpx;
+  height: 88rpx;
+  /* background:#efefef; */
+}
+.left-info .myinfo{
+  display: block;
+  float: left;
+  background: #75c475;
+  max-width: 490rpx;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
+  padding: 10rpx 18rpx;
+  border-radius: 20rpx;
+}
+.left-info::after{
+  content:'';
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.right-info{
+  clear: both;
+  margin: 10rpx 20rpx;
+}
+.right-info .myinfo{
+    display: block;
+    float: right;
+    background: #efefef;
+    max-width: 490rpx;
+    margin-top: 10rpx;
+    margin-right: 20rpx;
+    padding: 10rpx 18rpx;
+    border-radius: 20rpx;
+}
+.right-info .myhead{
+    float: right;
+    width: 88rpx;
+    height: 88rpx;
+    /* background-color: #efefef; */
+}
+.right-info::after{
+  content:'';
+  clear: both;
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+ 
+/* 底部 */
+.foot-input{
+  position: fixed;
+  bottom: 0;
+  border-top: 1px solid #DDDDDD;
+  width: 750rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #ffffff;
+}
+.foot-input .send-input{
+  float: left;
+  width: 560rpx;
+  max-width: 600rpx;
+  margin: 16rpx 0 0 20rpx;
+  padding: 0 10rpx;
+}
+.foot-input .send-btn{
+  float: right;
+  margin: 11rpx 20rpx 0 0;
+  width: 120rpx;
+  height: 66rpx;
+  line-height: 66rpx;
+  text-align: center;
+  background: #cc351a;
+  color: #ffffff;
+  border-radius: 10rpx;
+}

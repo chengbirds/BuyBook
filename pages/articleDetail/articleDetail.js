@@ -9,7 +9,8 @@ Page({
 		article: {},
 		userInfo: {},
 		show:false,
-		value:1
+		value:1,
+		address: ''
 	},
 
 	/**
@@ -17,8 +18,16 @@ Page({
 	 */
 	onLoad: function (options) {
 		const that = this
-		var articleId = options.id;
-		console.log('articleId:', articleId);
+		wx.setStorageSync('optionsid',options.id)
+		var articleId
+		if(options.id==undefined){
+			articleId=wx.getStorageSync('optionsid');
+		}else{
+			articleId = options.id
+		}
+		
+
+		console.log('articleId:666', articleId);
 		// 通过id获取详情信息
 		wx.request({
 			url: `http://127.0.0.1:8000/api/book/${articleId}`,
@@ -37,6 +46,26 @@ Page({
 				console.log(res, 667,that.data.userInfo);
 			}
 		})
+
+		wx.request({
+			url: 'http://127.0.0.1:8000/api/address/',
+			header: {
+				"token": wx.getStorageSync('token')
+			},
+			success: (res) => {
+				console.log(res.data.data.results, 32);
+				var address
+				res.data.data.results.forEach((item) => {
+					if (item.is_default == true) {
+						address = item
+					}
+				})
+				that.setData({
+					address: address
+				})
+				console.log(that.data.address, 888);
+			}
+		})
 	},
 	// 弹框的出现与消失
 	isShow(){
@@ -44,11 +73,47 @@ Page({
 this.setData({
 	show:true
 })
+
+// wx.navigateBack('/pages/index/index')
+
+
 	},
 	onClose(){
 		this.setData({
 			show:false
 		})
+	},
+	buy(){
+		const that = this;
+		var address_id = that.data.address.id
+		
+			var seller_id
+			var book_id
+			var quantity
+			seller_id = that.data.userInfo.id
+			book_id =that.data.article.id
+			quantity =that.data.value
+			wx.request({
+				url: 'http://127.0.0.1:8000/api/order/',
+				method: 'POST',
+				data: {
+					address_id: address_id,
+					seller_id: seller_id,
+					book_id: book_id,
+					quantity: quantity,
+					status: 1
+				},
+				header: {
+					"token": wx.getStorageSync('token')
+				},
+				success: ((res) => {
+					console.log(res.data.code, 445);
+					// 加入订单成功
+					if (res.data.code == 0) {
+				Toast('付款成功！')
+					}
+				})
+			})
 	},
 	addCart(){
 		const that=this;
@@ -84,14 +149,13 @@ console.log(res,6668885)
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-		this.setData({
-			article: app.globalData.articleDetail
-		});
-		if (app.globalData.userInfo) {
-			this.setData({
-				userInfo: app.globalData.userInfo,
-			});
-		}
+
+	},
+	gochatview(){
+const buyer=wx.getStorageSync('user').id
+		wx.navigateTo({
+			url: `../chatview/chatview?buyer=${buyer}&seller=${this.data.userInfo.id}`
+	})
 	},
 
 	/**

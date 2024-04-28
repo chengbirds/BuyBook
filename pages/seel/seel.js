@@ -249,13 +249,14 @@ Page({
 				user: 'test'
 			},
 			success(res) {
+				console.log(JSON.parse(res.data).path,8880000);
 				// 上传完成需要更新 fileList
 				const {
 					fileList = []
 				} = that.data;
 				fileList.push({
 					...file,
-					url: res.data
+					url: JSON.parse(res.data).path
 				});
 				that.setData({
 					fileList
@@ -274,7 +275,7 @@ Page({
 				detail: that.data.detail,
 				status: that.data.array[that.data.index],
 				price: that.data.price,
-				type_id: that.data.index1+1,
+				type_id: Number(that.data.index1)+1,
 				image: that.data.fileList[0]?.url
 			}
 		} else {
@@ -284,7 +285,7 @@ Page({
 				detail: that.data.detail,
 				status: that.data.array[that.data.index],
 				price: that.data.price,
-				type_id: that.data.index1+1,
+				type_id:Number(that.data.index1)+1,
 			}
 		}
 		wx.request({
@@ -295,6 +296,7 @@ Page({
 				"token": wx.getStorageSync('token')
 			},
 			success: (res) => {
+				console.log(that.data.index1,888);
 				if(res.data.code==0){
 					// 发布成功
 					Toast('发布成功~')

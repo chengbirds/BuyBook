@@ -15,13 +15,16 @@
 		"pages/myorder/myorder",
 		"pages/seellist/seellist",
 		"pages/question/question",
-		"pages/articleDetail/articleDetail"
+		"pages/articleDetail/articleDetail",
+		"pages/chat/chat",
+		"pages/chatview/chatview"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
 		"navigationBarBackgroundColor": "#08dae7",
 		"navigationBarTitleText": "WeChat",
-		"navigationBarTextStyle": "black"
+		"navigationBarTextStyle": "black",
+		"onReachBottomDistance": 100
 	},
 	"tabBar": {
 		"color": "white",
@@ -55,7 +58,7 @@
 		]
 	},
 	"usingComponents": {
-    "van-field": "@vant/weapp/field/index",
+		"van-field": "@vant/weapp/field/index",
 		"van-button": "@vant/weapp/button/index",
 		"van-icon": "@vant/weapp/icon/index",
 		"van-uploader": "@vant/weapp/uploader/index",
@@ -74,8 +77,8 @@
 		"van-sticky": "@vant/weapp/sticky/index",
 		"van-sidebar": "@vant/weapp/sidebar/index",
 		"van-sidebar-item": "@vant/weapp/sidebar-item/index"
-		
 
-		
-  }
+
+
+	}
 }

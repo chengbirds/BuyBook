@@ -139,7 +139,7 @@ button::after {
 .titel {
   width: 100%;
   margin-top: 15rpx;
-  margin-bottom: 70rpx;
+  margin-bottom: 10rpx;
 }
 .price{
   color: #ff4d4d;

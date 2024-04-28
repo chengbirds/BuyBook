@@ -1,0 +1,31 @@
+<!--pages/wxchat/wxchat.wxml-->
+ 
+<!-- 聊天信息 -->
+<view class="content">
+  <scroll-view class="content-info" scroll-y scroll-top="{{scrollTop}}">
+    <view class="content-list">
+      <view class="content-li" wx:for="{{infoList}}" wx:key="id"> 
+        <!-- 右边 -->
+        <block wx:if="{{item.user_id === userid}}">
+          <view class="right-info">
+            <image class="myhead" src="http://127.0.0.1:8000{{item.avatar}}"></image>
+            <text class="myinfo">{{item.msg}}</text>
+          </view>
+        </block>
+        <!-- 左边 -->
+        <block wx:else>
+          <view class="left-info">
+            <image class="myhead" src="http://127.0.0.1:8000{{item.avatar}}"></image>
+            <text class="myinfo">{{item.msg}}</text>
+            </view>
+        </block>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+ 
+<!-- 操作区 -->
+<view class="foot-input">
+  <input type="text" class="send-input" placeholder="请输入聊天内容..." model:value="{{message}}" bindtab="handleChange"/>
+  <view class="send-btn" bindtap="handleSend">发送</view>
+</view>

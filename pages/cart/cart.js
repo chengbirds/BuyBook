@@ -27,13 +27,14 @@ Page({
 			Toast('请设置默认地址！')
 		} else {
 			var address_id = that.data.address.id
-
+var carts=[]
 			that.data.carts.forEach((item) => {
 				var seller_id
 				var book_id
 				var quantity
 				if (item.selected) {
 					if (item.selected == true) {
+						carts.push(item)
 						seller_id = item.user.id
 						book_id = item.book.id
 						quantity = item.quantity
@@ -58,7 +59,7 @@ Page({
 
 
 									wx.navigateTo({
-										url: `../orderdetail/orderdetail?carts=${JSON.stringify(that.data.carts)}&address=${JSON.stringify(that.data.address)}`
+										url: `../orderdetail/orderdetail?carts=${JSON.stringify(carts)}&address=${JSON.stringify(that.data.address)}`
 								})
 
 								}
@@ -189,8 +190,28 @@ Page({
 				"token": wx.getStorageSync('token')
 			},
 			success: async (res) => {
-				await Toast('删除成功！')
-				that.onShow()
+				wx.request({
+					url: 'http://127.0.0.1:8000/api/cart/',
+					header: {
+						"token": wx.getStorageSync('token')
+					},
+					success: (res) => {
+						console.log(res, 889, res.data.data.results.length);
+						
+							this.setData({
+								hasList: true,
+								carts: res.data.data.results,
+								selectAll: false,
+								totalPrice: 0
+							});
+						if(this.data.carts.length==0){
+							this.setData({
+								hasList:false
+							})
+						}
+		
+					}
+				})
 
 			}
 		})
@@ -202,7 +223,7 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
 	onLoad: function (options) {
-
+this.onShow()
 	},
 	/**
 	 * 生命周期函数--监听页面初次渲染完成

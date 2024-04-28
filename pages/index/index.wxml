@@ -5,13 +5,14 @@
     <!-- <open-data type=“userAvatarUrl”></open-data>
     <open-data type=“userNickName”></open-data> -->
 		<text style="position: absolute;margin-top: 20rpx;margin-left: 200rpx;">{{userInfo.username}} </text>
+<view wx:if="{{userInfo}}"><image class="avatar" src="http://127.0.0.1:8000{{avatarUrl}}" bind:tap="chooseImage"></image></view>
+<view wx:else><image class="avatar" src="{{avatarUrl}}"></image></view>
 
-<image class="avatar" src="{{avatarUrl}}" bind:tap="chooseImage"></image>
 
 
 <text bind:tap="log" style="font-size: 35rpx;margin-top: 120rpx;margin-left: 20rpx;" >登录/退出</text>
   </view>
-  <view class="about">关于我们</view>
+
   </view>
   <view class="address">
     <text bindtap='bindViewTapAddress'>地址管理</text>
@@ -26,6 +27,9 @@
   </view>
   <view class="order-box">
   <navigator url="../myorder/myorder">我的订单</navigator>
+  </view>
+	<view class="order-box">
+  <navigator url="../chat/chat">我的聊天</navigator>
   </view>
   <van-popup show="{{ show }}" bind:close="onClose"  position="bottom" round>
 <view style="width:750rpx;height: 410rpx;text-align: center;">
