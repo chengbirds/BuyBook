@@ -2,7 +2,8 @@
 <view>
  <view class='search'>
 
-  <input type='text' placeholder='搜你想搜' placeholder-class='placeholder'></input>
+	<input type='text' placeholder='搜你想搜' placeholder-class='placeholder' bindinput='handleInput'>
+</input>
  </view>
 
   <swiper indicator-dots="true" autoplay="true" interval="3000">

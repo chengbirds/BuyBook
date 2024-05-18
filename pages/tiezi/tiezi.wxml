@@ -1,0 +1,33 @@
+<view style="padding: 50rpx;">
+  <van-cell-group wx:for="{{tieziList}}" wx:key="id" wx:for-item="item" bind:tap="gopinglun" data-id="{{item.id}}">
+    <view style="display: flex; align-items: center;margin-bottom: 10rpx;">
+      <van-cell title="{{item.title}}" label="{{item.create_time}}" border="true" value="{{item.content}}"/>
+     
+    </view>
+  </van-cell-group>
+	<view style="position: fixed; bottom: 20px;">
+	<van-button round block color='#08dae7' bind:tap="fatiezi">发布帖子</van-button></view>
+	<van-dialog
+  use-slot
+  title="帖子"
+  show="{{ show }}"
+  show-cancel-button
+  confirm-button-open-type="getUser"
+  bind:close="onClose"
+  bind:getuserinfo="getUser"
+	bind:confirm="getUser"
+>
+<van-cell-group>
+  <van-field
+    model:value="{{title }}"
+    placeholder="请输入标题"
+    border="{{ false }}"
+  />
+	<van-field
+    model:value="{{content }}"
+    placeholder="请输入内容"
+    border="{{ false }}"
+  />
+</van-cell-group>
+</van-dialog>
+</view>

@@ -5,11 +5,11 @@
        <form class="form1" bindsubmit="formSubmit">
        <view class="search-detial">
          <view>
-           <input type="text" name="bookname" value="{{ bookname }}"  placeholder='搜索您想要的书' placeholder-style='font-size: 34rpx; text-align: center; color: #ccc;'></input>
+           <input type="text" name="bookname" model:value="{{ bookname }}"  placeholder='搜索您想要的书' placeholder-style='font-size: 34rpx; text-align: center; color: #ccc;'></input>
          </view>
         </view>
          <view class="sousuobutton">
-          <button class="sousuo-button" form-type='submit'>搜索</button>
+          <button class="sousuo-button" form-type='submit'  bindtap='search'>搜索</button>
           </view>
        </form>
     </view>

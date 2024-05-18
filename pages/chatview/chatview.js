@@ -9,6 +9,17 @@ Page({
 		session_id: ''
 	},
 	onLoad: function (options) {
+		console.log(1111,this.data.ws);
+
+			wx.closeSocket({
+				success: () => {
+					console.log('WebSocket连接已关闭');
+				},
+				fail: (error) => {
+					console.error('关闭WebSocket连接时出错:', error);
+				}
+			});
+		
 		const that = this
 		var a = ''
 		console.log(options, 88877);
@@ -70,9 +81,12 @@ Page({
 	},
 	// 创建服务器连接
 	createSocketServer(a, b) {
+	
+		console.log(222250,a,b);
 		var ws = wx.connectSocket({
 			url: `ws://127.0.0.1:8000/chat/${a}/${b}/`
 		})
+		console.log(wx,9999);
 		this.setData({
 			ws: ws
 		})
@@ -105,7 +119,13 @@ Page({
 			this.data.ws.send({
 				data: data
 			})
+			this.setData({
+				message:''
+			})
+		
 		}
+
+		console.log(11111,this.data.message);
 	},
 	onShow() {
 

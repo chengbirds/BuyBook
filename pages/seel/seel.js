@@ -300,6 +300,9 @@ Page({
 				if(res.data.code==0){
 					// 发布成功
 					Toast('发布成功~')
+					wx.navigateBack({
+						delta: 1  // 返回上一页
+					});
 				}else{
 					Toast('发布失败~')
 				}

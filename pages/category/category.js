@@ -11,9 +11,11 @@ Page({
 		msg: '',
 		complete: false,
 		category: {},
-		id: 1
+		id: 0
 	},
 	formSubmit: function (e) {
+		console.log(e,777);
+		const that=this
 		wx.request({
 			url: `http://127.0.0.1:8000/api/book/search/?wd=${this.data.bookname}`,
 			header:{
@@ -21,6 +23,9 @@ Page({
 			},
 			success:(res)=>{
 		console.log(res,555)
+		that.setData({
+			bookList:res.data.data
+		})
 		
 			}
 		})
@@ -120,7 +125,7 @@ Page({
 	 * 生命周期函数--监听页面显示
 	 */
 	onShow: function () {
-
+		this.onLoad()
 	},
 
 	/**

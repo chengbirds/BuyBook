@@ -128,6 +128,27 @@ console.log(that.data.article,88);
 		
 	
 	},
+	handleInput(event) {
+		console.log('进来了');
+		const that=this
+    const inputValue = event.detail.value; // 获取输入框的值
+		// 在这里可以处理输入的字符，比如触发某个事件
+		wx.request({
+			url: `http://127.0.0.1:8000/api/book/search/?wd=${inputValue}`,
+			header:{
+				"token":wx.getStorageSync('token')
+			},
+			success:(res)=>{
+				console.log(res,22);
+				that.setData({
+					article:res.data.data
+				})
+
+			}
+		})
+    console.log(inputValue); // 控制台输出输入的值
+    // 触发你想要的事件
+  },
 
 	/**
 	 * 生命周期函数--监听页面隐藏

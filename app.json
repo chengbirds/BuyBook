@@ -17,7 +17,9 @@
 		"pages/question/question",
 		"pages/articleDetail/articleDetail",
 		"pages/chat/chat",
-		"pages/chatview/chatview"
+		"pages/chatview/chatview",
+		"pages/tiezi/tiezi",
+		"pages/pinlun/pinlun"
 	],
 	"window": {
 		"backgroundTextStyle": "light",
@@ -76,7 +78,8 @@
 		"van-switch": "@vant/weapp/switch/index",
 		"van-sticky": "@vant/weapp/sticky/index",
 		"van-sidebar": "@vant/weapp/sidebar/index",
-		"van-sidebar-item": "@vant/weapp/sidebar-item/index"
+		"van-sidebar-item": "@vant/weapp/sidebar-item/index",
+		"van-dialog": "@vant/weapp/dialog/index"
 
 
 
