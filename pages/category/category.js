@@ -13,6 +13,7 @@ Page({
 		category: {},
 		id: 0
 	},
+	
 	formSubmit: function (e) {
 		console.log(e,777);
 		const that=this
